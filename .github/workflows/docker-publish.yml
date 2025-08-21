@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     env:
       RPC_CLIENT_URL: ${{ secrets.RPC_CLIENT_URL }}
       MONGODB_URL: ${{ secrets.MONGODB_URL }}
@@ -37,8 +40,8 @@ jobs:
 
       #Build Docker image
       - name: Build Docker image
-        run: docker build -t ghcr.io/titanium-ctrl/solana-api:latest .
+        run: docker build -t ghcr.io/titanium-ctrl/solana-balance-check:latest .
 
       #Push Docker image to GHCR
       - name: Push Docker image
-        run: docker push ghcr.io/titanium-ctrl/solana-api:latest
+        run: docker push ghcr.io/titanium-ctrl/solana-balance-check:latest
