@@ -1,0 +1,40 @@
+name: Docker
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      #Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      #Set up Go
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.24.6
+
+      #Run unit tests
+      - name: Run Go tests
+        run: go test ./... -v
+
+      #Log in to GHCR
+      - name: GHCR login
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      #Build Docker image
+      - name: Build Docker image
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/solana-api:latest .
+
+      #Push Docker image to GHCR
+      - name: Push Docker image
+        run: docker push ghcr.io/${{ github.repository_owner }}/solana-api:latest
