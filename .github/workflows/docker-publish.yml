@@ -7,6 +7,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      RPC_CLIENT_URL: ${{ secrets.RPC_CLIENT_URL }}
+      MONGODB_URL: ${{ secrets.MONGODB_URL }}
+      REDIS_URL: ${{ secrets.REDIS_URL }}
 
     steps:
       #Checkout repository
