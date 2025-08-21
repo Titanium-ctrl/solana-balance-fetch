@@ -37,8 +37,8 @@ jobs:
 
       #Build Docker image
       - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository_owner }}/solana-api:latest .
+        run: docker build -t ghcr.io/${{ github.repository_owner | lower }}/solana-api:latest .
 
       #Push Docker image to GHCR
       - name: Push Docker image
-        run: docker push ghcr.io/${{ github.repository_owner }}/solana-api:latest
+        run: docker push ghcr.io/${{ github.repository_owner | lower }}/solana-api:latest
